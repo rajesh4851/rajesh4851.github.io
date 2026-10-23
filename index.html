@@ -124,18 +124,18 @@
 
   /* avatar */
   .avatar-spot { position: relative; justify-self: center; width: min(380px, 80vw); }
-  .avatar-blob {
-    position: absolute; inset: 8% 4% 0; background: var(--lilac);
-    border: 4px solid var(--ink); border-radius: 46% 54% 42% 58% / 52% 44% 56% 48%;
-    animation: morph 9s ease-in-out infinite;
-  }
   .avatar {
-    position: relative; width: 100%; display: block; cursor: pointer;
+    position: relative; display: block; cursor: pointer;
     transform-origin: 50% 100%;
   }
   .avatar.jump { animation: jump .55s cubic-bezier(.3,1.6,.5,1); }
-  #wave-arm { transform-origin: 212px 262px; animation: wave 2.4s ease-in-out infinite; }
-  .eye { transform-box: fill-box; transform-origin: center; animation: blink 4.5s infinite; }
+  .avatar img {
+    display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover;
+    background: #85d4dc; border: 4px solid var(--ink);
+    border-radius: 46% 54% 42% 58% / 52% 44% 56% 48%;
+    box-shadow: 8px 8px 0 var(--ink);
+    animation: morph 9s ease-in-out infinite;
+  }
   .bubble {
     position: absolute; top: -6%; left: -14%; z-index: 4;
     background: var(--paper); color: var(--text); border: 3px solid var(--ink); border-radius: 20px;
@@ -267,8 +267,6 @@
   .pop { position: fixed; pointer-events: none; z-index: 50; font-size: 22px; animation: pop .9s ease-out forwards; }
 
   /* ---------- Animations ---------- */
-  @keyframes wave { 0%, 60%, 100% { transform: rotate(0); } 10%, 30%, 50% { transform: rotate(-18deg); } 20%, 40% { transform: rotate(10deg); } }
-  @keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
   @keyframes bob { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-8px) rotate(1deg); } }
   @keyframes float { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-16px) rotate(8deg); } }
   @keyframes spin { to { transform: rotate(360deg); } }
@@ -390,44 +388,10 @@
     </div>
 
     <div class="avatar-spot">
-      <div class="avatar-blob"></div>
       <div class="bubble" id="bubble" aria-live="polite">Hi! Click me 😄</div>
-      <svg class="avatar" id="avatar" viewBox="0 0 300 340" role="img" aria-label="Cartoon of Rajesh waving hello">
-        <!-- body -->
-        <path d="M66 340 Q66 236 150 230 Q234 236 234 340 Z" fill="#2ec4b6" stroke="#1d1b2f" stroke-width="5" stroke-linejoin="round"/>
-        <path d="M128 232 L150 262 L172 232" fill="#fff8ec" stroke="#1d1b2f" stroke-width="5" stroke-linejoin="round"/>
-        <!-- lazy arm -->
-        <path d="M92 262 Q70 296 84 336" fill="none" stroke="#1d1b2f" stroke-width="5" stroke-linecap="round"/>
-        <!-- neck -->
-        <rect x="134" y="200" width="32" height="34" rx="8" fill="#f3c49b" stroke="#1d1b2f" stroke-width="5"/>
-        <!-- ears -->
-        <circle cx="86" cy="158" r="14" fill="#f3c49b" stroke="#1d1b2f" stroke-width="5"/>
-        <circle cx="214" cy="158" r="14" fill="#f3c49b" stroke="#1d1b2f" stroke-width="5"/>
-        <!-- head -->
-        <ellipse cx="150" cy="150" rx="64" ry="68" fill="#f3c49b" stroke="#1d1b2f" stroke-width="5"/>
-        <!-- hair -->
-        <path d="M84 150 Q78 78 150 74 Q222 78 216 150 Q212 118 190 108 Q176 124 150 112 Q128 126 108 110 Q90 122 84 150 Z" fill="#2b2238" stroke="#1d1b2f" stroke-width="5" stroke-linejoin="round"/>
-        <path d="M130 76 Q140 56 158 66" fill="none" stroke="#2b2238" stroke-width="7" stroke-linecap="round"/>
-        <!-- brows -->
-        <path d="M112 134 Q124 126 136 132" fill="none" stroke="#1d1b2f" stroke-width="5" stroke-linecap="round"/>
-        <path d="M164 132 Q176 126 188 134" fill="none" stroke="#1d1b2f" stroke-width="5" stroke-linecap="round"/>
-        <!-- eyes -->
-        <g class="eye"><ellipse cx="124" cy="154" rx="8" ry="10" fill="#1d1b2f"/><circle cx="127" cy="150" r="3" fill="#fff"/></g>
-        <g class="eye"><ellipse cx="176" cy="154" rx="8" ry="10" fill="#1d1b2f"/><circle cx="179" cy="150" r="3" fill="#fff"/></g>
-        <!-- cheeks -->
-        <circle cx="108" cy="178" r="10" fill="#ff9ec7" opacity=".6"/>
-        <circle cx="192" cy="178" r="10" fill="#ff9ec7" opacity=".6"/>
-        <!-- smile -->
-        <path d="M124 180 Q150 210 176 180 Z" fill="#7a2e3b" stroke="#1d1b2f" stroke-width="5" stroke-linejoin="round"/>
-        <path d="M136 194 Q150 202 164 194" fill="#ff8a8a"/>
-        <!-- waving arm -->
-        <g id="wave-arm">
-          <path d="M212 262 Q252 238 258 186" fill="none" stroke="#1d1b2f" stroke-width="30" stroke-linecap="round"/>
-          <path d="M212 262 Q252 238 258 186" fill="none" stroke="#2ec4b6" stroke-width="20" stroke-linecap="round"/>
-          <circle cx="259" cy="170" r="18" fill="#f3c49b" stroke="#1d1b2f" stroke-width="5"/>
-          <path d="M248 158 L246 146 M258 154 L258 140 M268 158 L271 146" stroke="#1d1b2f" stroke-width="4" stroke-linecap="round"/>
-        </g>
-      </svg>
+      <div class="avatar" id="avatar" role="img" aria-label="Cartoon portrait of Rajesh">
+        <img src="images/rajesh.jpg" alt="" width="800" height="800">
+      </div>
     </div>
   </div>
 
