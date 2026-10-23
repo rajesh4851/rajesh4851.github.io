@@ -74,6 +74,12 @@
     transition: background-color .2s ease;
   }
   .nav-links a:hover { background: var(--sun); color: #1d1b2f; }
+  .nav-links a.blog-link {
+    background: var(--coral); color: #1d1b2f; border: 3px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--ink); padding: 6px 16px; margin-right: 8px; white-space: nowrap;
+    transition: transform .15s ease, box-shadow .15s ease, background-color .2s ease;
+  }
+  .nav-links a.blog-link:hover { background: var(--sun); transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--ink); }
   .toggle {
     width: 46px; height: 46px; border-radius: 50%;
     border: 3px solid var(--ink); background: var(--sun); color: #1d1b2f;
@@ -299,7 +305,8 @@
   }
   @media (max-width: 560px) {
     body { font-size: 17px; }
-    .nav-links a { display: none; }
+    .logo { font-size: 24px; }
+    .nav-links a.blog-link { padding: 6px 12px; margin-right: 4px; font-size: 15px; }
     .cards { grid-template-columns: 1fr; }
     .bubble { left: -4%; font-size: 16px; }
     .notebook { padding-left: 54px; }
@@ -322,10 +329,7 @@
 <nav>
   <a class="logo" href="#top">rajesh<span>.</span></a>
   <div class="nav-links">
-    <a href="#about">About</a>
-    <a href="#things">Things</a>
-    <a href="#now">Now</a>
-    <a href="#hi">Say hi</a>
+    <a class="blog-link" href="blog/">Telugu blogs ✍️</a>
     <button class="toggle" id="toggle" aria-label="Switch between day and night">🌙</button>
   </div>
 </nav>
@@ -498,7 +502,7 @@
           <ul>
             <li><span class="check done">✓</span> Launched this website!</li>
             <li><span class="check done">✓</span> Gave it a brand new look</li>
-            <li><span class="check soon">…</span> Writing my first post</li>
+            <li><span class="check done">✓</span> Wrote my first <a href="blog/">Telugu blogs</a></li>
             <li><span class="check"></span> Building something new</li>
             <li><span class="check"></span> Your idea here? Say hi ↓</li>
           </ul>
