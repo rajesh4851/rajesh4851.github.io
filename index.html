@@ -1,0 +1,636 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rajesh · Hello there!</title>
+<meta name="description" content="Rajesh's little corner of the internet — part playground, part notebook.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='44' fill='%23ffd23f' stroke='%231d1b2f' stroke-width='8'/><circle cx='36' cy='44' r='6' fill='%231d1b2f'/><circle cx='64' cy='44' r='6' fill='%231d1b2f'/><path d='M32 62 Q50 78 68 62' fill='none' stroke='%231d1b2f' stroke-width='7' stroke-linecap='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1d1b2f;
+    --text: #1d1b2f;
+    --muted: #5b5670;
+    --bg: #fff8ec;
+    --paper: #ffffff;
+    --sky-top: #9fdcff;
+    --sky-bottom: #fff8ec;
+    --hill-1: #8fd694;
+    --hill-2: #5fbf74;
+    --sun: #ffd23f;
+    --coral: #ff6b6b;
+    --teal: #2ec4b6;
+    --lilac: #b8a1ff;
+    --pink: #ff9ec7;
+    --skin: #f3c49b;
+    --shadow: 6px 6px 0 var(--ink);
+  }
+  body.night {
+    --text: #fdf6e3;
+    --muted: #c9c3e6;
+    --bg: #15173a;
+    --paper: #24275a;
+    --sky-top: #0b0d2b;
+    --sky-bottom: #15173a;
+    --hill-1: #2f6b4f;
+    --hill-2: #23523c;
+    --ink: #0a0a1c;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Nunito", system-ui, sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    transition: background-color .6s ease, color .6s ease;
+  }
+  h1, h2, h3, .logo, .btn, nav a { font-family: "Fredoka", "Nunito", sans-serif; }
+  a { color: inherit; }
+  .wrap { width: min(1100px, 100% - 32px); margin-inline: auto; }
+
+  /* ---------- Nav ---------- */
+  nav {
+    position: sticky; top: 0; z-index: 20;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px max(16px, calc((100% - 1100px) / 2));
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 3px solid var(--ink);
+    transition: background-color .6s ease;
+  }
+  .logo { font-size: 28px; font-weight: 700; text-decoration: none; letter-spacing: -.5px; }
+  .logo span { color: var(--coral); }
+  .nav-links { display: flex; gap: 6px; align-items: center; }
+  .nav-links a {
+    text-decoration: none; font-weight: 600; padding: 6px 12px; border-radius: 999px;
+    transition: background-color .2s ease;
+  }
+  .nav-links a:hover { background: var(--sun); color: #1d1b2f; }
+  .toggle {
+    width: 46px; height: 46px; border-radius: 50%;
+    border: 3px solid var(--ink); background: var(--sun); color: #1d1b2f;
+    font-size: 20px; cursor: pointer; box-shadow: 3px 3px 0 var(--ink);
+    transition: transform .15s ease, box-shadow .15s ease, background-color .3s ease;
+  }
+  .toggle:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--ink); }
+  .toggle:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
+  body.night .toggle { background: #f4f1c9; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    min-height: calc(100vh - 76px);
+    background: linear-gradient(var(--sky-top), var(--sky-bottom) 85%);
+    overflow: hidden;
+    transition: background .6s ease;
+    display: flex; align-items: center;
+    padding: 40px 0 140px;
+  }
+  .hero-inner {
+    position: relative; z-index: 3;
+    display: grid; grid-template-columns: 1.1fr .9fr; gap: 32px; align-items: center;
+  }
+  .hello-tag {
+    display: inline-block; background: var(--paper); border: 3px solid var(--ink);
+    border-radius: 999px; padding: 6px 16px; font-weight: 700;
+    box-shadow: 3px 3px 0 var(--ink); transform: rotate(-3deg);
+  }
+  .hero h1 {
+    font-size: clamp(52px, 9vw, 104px); line-height: .95; margin: 22px 0 18px;
+    letter-spacing: -2px;
+  }
+  .name { position: relative; display: inline-block; color: var(--coral); }
+  .name svg { position: absolute; left: 0; bottom: -18px; width: 100%; height: 26px; }
+  .name svg path { stroke-dasharray: 400; stroke-dashoffset: 400; animation: draw 1.2s .4s ease-out forwards; }
+  .hero p.lead { font-size: 21px; max-width: 30ch; color: var(--muted); margin: 0 0 28px; }
+  .btns { display: flex; flex-wrap: wrap; gap: 14px; }
+  .btn {
+    display: inline-block; text-decoration: none; font-weight: 600; font-size: 19px;
+    padding: 12px 24px; border: 3px solid var(--ink); border-radius: 14px;
+    background: var(--sun); color: #1d1b2f; box-shadow: 4px 4px 0 var(--ink);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .btn.alt { background: var(--paper); color: var(--text); }
+  .btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
+  .btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); }
+
+  /* avatar */
+  .avatar-spot { position: relative; justify-self: center; width: min(380px, 80vw); }
+  .avatar-blob {
+    position: absolute; inset: 8% 4% 0; background: var(--lilac);
+    border: 4px solid var(--ink); border-radius: 46% 54% 42% 58% / 52% 44% 56% 48%;
+    animation: morph 9s ease-in-out infinite;
+  }
+  .avatar {
+    position: relative; width: 100%; display: block; cursor: pointer;
+    transform-origin: 50% 100%;
+  }
+  .avatar.jump { animation: jump .55s cubic-bezier(.3,1.6,.5,1); }
+  #wave-arm { transform-origin: 212px 262px; animation: wave 2.4s ease-in-out infinite; }
+  .eye { transform-box: fill-box; transform-origin: center; animation: blink 4.5s infinite; }
+  .bubble {
+    position: absolute; top: -6%; left: -14%; z-index: 4;
+    background: var(--paper); color: var(--text); border: 3px solid var(--ink); border-radius: 20px;
+    padding: 10px 16px; font-weight: 700; font-family: "Fredoka", sans-serif; font-size: 18px;
+    box-shadow: 4px 4px 0 var(--ink); max-width: 220px;
+    animation: bob 3s ease-in-out infinite;
+  }
+  .bubble::after {
+    content: ""; position: absolute; right: 26px; bottom: -14px; width: 20px; height: 20px;
+    background: var(--paper); border-right: 3px solid var(--ink); border-bottom: 3px solid var(--ink);
+    transform: rotate(45deg);
+  }
+
+  /* sky things */
+  .sky-btn {
+    position: absolute; top: 40px; right: 6%; z-index: 2; width: 120px; height: 120px;
+    background: none; border: 0; padding: 0; cursor: pointer;
+  }
+  .sun, .moon { position: absolute; inset: 0; transition: opacity .6s ease, transform .6s ease; }
+  .sun .rays { transform-origin: 60px 60px; animation: spin 20s linear infinite; }
+  .moon { opacity: 0; transform: translateY(30px) rotate(-30deg); }
+  body.night .sun { opacity: 0; transform: translateY(30px); }
+  body.night .moon { opacity: 1; transform: none; }
+
+  .cloud { position: absolute; left: 0; z-index: 1; width: 160px; animation: drift linear infinite; transition: opacity .6s ease; }
+  .cloud.c1 { top: 12%; animation-duration: 55s; animation-delay: -10s; }
+  .cloud.c2 { top: 30%; width: 110px; animation-duration: 70s; animation-delay: -40s; }
+  .cloud.c3 { top: 6%; width: 90px; animation-duration: 85s; animation-delay: -60s; }
+  body.night .cloud { opacity: .25; }
+
+  .star { position: absolute; z-index: 1; width: 16px; opacity: 0; transition: opacity .8s ease; }
+  body.night .star { opacity: 1; animation: twinkle 2.5s ease-in-out infinite; }
+
+  .doodle { position: absolute; z-index: 2; animation: float 6s ease-in-out infinite; }
+
+  .hills { position: absolute; left: 0; right: 0; bottom: -2px; width: 100%; height: 170px; z-index: 2; }
+  .hills path { transition: fill .6s ease; }
+
+  /* ---------- Marquee ---------- */
+  .marquee {
+    background: var(--ink); color: #fff8ec; overflow: hidden; white-space: nowrap;
+    border-block: 3px solid var(--ink); transform: rotate(-1.5deg); margin: -20px -10px 0;
+    position: relative; z-index: 5;
+  }
+  .marquee-track {
+    display: inline-block; padding: 14px 0; font-family: "Fredoka", sans-serif;
+    font-size: 26px; font-weight: 600; animation: scroll 28s linear infinite;
+  }
+  .marquee-track span { margin: 0 18px; }
+  .marquee-track .dot { color: var(--sun); }
+
+  /* ---------- Sections ---------- */
+  section { padding: 100px 0 40px; }
+  .section-title {
+    font-size: clamp(36px, 6vw, 56px); margin: 0 0 36px; line-height: 1.05;
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  }
+  .section-title .chip {
+    font-size: 16px; background: var(--teal); color: #1d1b2f; border: 3px solid var(--ink);
+    border-radius: 999px; padding: 4px 14px; transform: rotate(4deg);
+  }
+
+  .about {
+    display: grid; grid-template-columns: 260px 1fr; gap: 40px; align-items: center;
+    background: var(--paper); border: 4px solid var(--ink); border-radius: 28px;
+    padding: 40px; box-shadow: var(--shadow); position: relative;
+    transition: background-color .6s ease;
+  }
+  .about p { margin: 0 0 14px; font-size: 20px; }
+  .about p:last-child { margin: 0; }
+  .tape {
+    position: absolute; top: -18px; left: 50%; width: 120px; height: 34px;
+    background: color-mix(in srgb, var(--sun) 75%, transparent);
+    border: 2px dashed var(--ink); transform: translateX(-50%) rotate(-4deg);
+  }
+
+  .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .card {
+    background: var(--paper); border: 4px solid var(--ink); border-radius: 24px;
+    padding: 22px; box-shadow: var(--shadow); text-align: center;
+    transition: transform .25s cubic-bezier(.3,1.5,.5,1), box-shadow .25s ease, background-color .6s ease;
+  }
+  .card:nth-child(odd) { transform: rotate(-2deg); }
+  .card:nth-child(even) { transform: rotate(2deg); }
+  .card:hover { transform: rotate(0) translateY(-8px) scale(1.03); box-shadow: 10px 12px 0 var(--ink); }
+  .card .icon {
+    width: 110px; height: 110px; margin: 0 auto 10px; border-radius: 50%;
+    border: 3px solid var(--ink); display: grid; place-items: center;
+  }
+  .card .icon svg { width: 80px; height: 80px; }
+  .card h3 { margin: 6px 0 6px; font-size: 24px; }
+  .card p { margin: 0; color: var(--muted); font-size: 16px; }
+
+  .now { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+  .notebook {
+    background: var(--paper); border: 4px solid var(--ink); border-radius: 18px;
+    box-shadow: var(--shadow); padding: 30px 30px 30px 64px; position: relative;
+    background-image: repeating-linear-gradient(transparent 0 43px, color-mix(in srgb, var(--teal) 35%, transparent) 43px 45px);
+    background-position: 0 22px;
+    transition: background-color .6s ease;
+  }
+  .notebook::before {
+    content: ""; position: absolute; left: 40px; top: 0; bottom: 0; width: 2px; background: var(--coral);
+  }
+  .notebook ul { list-style: none; margin: 0; padding: 0; }
+  .notebook li { line-height: 45px; font-size: 20px; font-weight: 600; display: flex; gap: 10px; align-items: center; }
+  .check {
+    width: 26px; height: 26px; flex: none; border: 3px solid var(--ink); border-radius: 7px;
+    background: var(--paper); display: grid; place-items: center; font-size: 16px; color: #1d1b2f;
+  }
+  .check.done { background: var(--teal); }
+  .check.soon { background: var(--sun); }
+  .note-art { justify-self: center; width: min(380px, 100%); }
+
+  /* ---------- Footer ---------- */
+  footer { position: relative; margin-top: 80px; padding: 150px 0 40px; text-align: center; overflow: hidden; }
+  footer .ground { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; }
+  footer h2 { font-size: clamp(40px, 7vw, 68px); margin: 0 0 10px; color: #1d1b2f; }
+  footer p { margin: 0 0 26px; color: #1d1b2f; font-weight: 600; }
+  footer .small { margin-top: 40px; font-size: 15px; opacity: .8; }
+
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+  .card.reveal { transition: opacity .7s ease, transform .3s cubic-bezier(.3,1.5,.5,1), box-shadow .25s ease, background-color .6s ease; }
+  .card.in:nth-child(odd) { transform: rotate(-2deg); }
+  .card.in:nth-child(even) { transform: rotate(2deg); }
+  .card.in:hover { transform: rotate(0) translateY(-8px) scale(1.03); }
+
+  .pop { position: fixed; pointer-events: none; z-index: 50; font-size: 22px; animation: pop .9s ease-out forwards; }
+
+  /* ---------- Animations ---------- */
+  @keyframes wave { 0%, 60%, 100% { transform: rotate(0); } 10%, 30%, 50% { transform: rotate(-18deg); } 20%, 40% { transform: rotate(10deg); } }
+  @keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
+  @keyframes bob { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-8px) rotate(1deg); } }
+  @keyframes float { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-16px) rotate(8deg); } }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes drift { from { transform: translateX(-200px); left: 0; } to { transform: translateX(110vw); left: 0; } }
+  @keyframes twinkle { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .3; transform: scale(.7); } }
+  @keyframes morph { 0%, 100% { border-radius: 46% 54% 42% 58% / 52% 44% 56% 48%; } 50% { border-radius: 58% 42% 55% 45% / 42% 58% 42% 58%; } }
+  @keyframes jump { 0% { transform: translateY(0) scale(1, 1); } 30% { transform: translateY(-30px) scale(.95, 1.05); } 70% { transform: translateY(0) scale(1.06, .94); } 100% { transform: none; } }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @keyframes scroll { to { transform: translateX(-50%); } }
+  @keyframes pop { from { opacity: 1; transform: translate(-50%, -50%) scale(.6); } to { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.2) rotate(var(--r)); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .name svg path { stroke-dashoffset: 0; }
+    .reveal { opacity: 1; transform: none; }
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; text-align: center; }
+    .hero p.lead { margin-inline: auto; }
+    .btns { justify-content: center; }
+    .avatar-spot { margin-top: 30px; }
+    .cards { grid-template-columns: repeat(2, 1fr); }
+    .about { grid-template-columns: 1fr; text-align: center; padding: 30px 22px; }
+    .about svg { width: 200px; margin: 0 auto; }
+    .now { grid-template-columns: 1fr; }
+    .sky-btn { width: 84px; height: 84px; top: 20px; right: 16px; }
+    .sky-btn svg { width: 84px; height: 84px; }
+  }
+  @media (max-width: 560px) {
+    body { font-size: 17px; }
+    .nav-links a { display: none; }
+    .cards { grid-template-columns: 1fr; }
+    .bubble { left: -4%; font-size: 16px; }
+    .notebook { padding-left: 54px; }
+    .notebook::before { left: 32px; }
+    .notebook li { font-size: 17px; }
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="cloud" viewBox="0 0 160 80">
+    <path d="M30 70 C8 70 6 44 26 40 C24 18 52 10 64 26 C72 6 106 6 112 30 C134 24 152 42 142 60 C150 70 140 72 132 70 Z" fill="#fff" stroke="#1d1b2f" stroke-width="4" stroke-linejoin="round"/>
+  </symbol>
+  <symbol id="star" viewBox="0 0 20 20">
+    <path d="M10 1 L12.5 7.5 L19 10 L12.5 12.5 L10 19 L7.5 12.5 L1 10 L7.5 7.5 Z" fill="#ffe680"/>
+  </symbol>
+</svg>
+
+<nav>
+  <a class="logo" href="#top">rajesh<span>.</span></a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#things">Things</a>
+    <a href="#now">Now</a>
+    <a href="#hi">Say hi</a>
+    <button class="toggle" id="toggle" aria-label="Switch between day and night">🌙</button>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <!-- sky -->
+  <button class="sky-btn" id="sky" aria-label="Switch between day and night">
+    <svg class="sun" viewBox="0 0 120 120" width="120" height="120">
+      <g class="rays" stroke="#1d1b2f" stroke-width="4" stroke-linecap="round">
+        <line x1="60" y1="4" x2="60" y2="18"/><line x1="60" y1="102" x2="60" y2="116"/>
+        <line x1="4" y1="60" x2="18" y2="60"/><line x1="102" y1="60" x2="116" y2="60"/>
+        <line x1="20" y1="20" x2="30" y2="30"/><line x1="90" y1="90" x2="100" y2="100"/>
+        <line x1="20" y1="100" x2="30" y2="90"/><line x1="90" y1="30" x2="100" y2="20"/>
+      </g>
+      <circle cx="60" cy="60" r="32" fill="#ffd23f" stroke="#1d1b2f" stroke-width="4"/>
+      <circle cx="50" cy="56" r="3.5" fill="#1d1b2f"/><circle cx="70" cy="56" r="3.5" fill="#1d1b2f"/>
+      <path d="M50 68 Q60 76 70 68" fill="none" stroke="#1d1b2f" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="44" cy="66" r="4" fill="#ff9ec7" opacity=".7"/><circle cx="76" cy="66" r="4" fill="#ff9ec7" opacity=".7"/>
+    </svg>
+    <svg class="moon" viewBox="0 0 120 120" width="120" height="120">
+      <path d="M78 22 A40 40 0 1 0 98 82 A32 32 0 1 1 78 22 Z" fill="#f4f1c9" stroke="#0a0a1c" stroke-width="4" stroke-linejoin="round"/>
+      <circle cx="46" cy="70" r="5" fill="#d9d4a0"/><circle cx="60" cy="88" r="3.5" fill="#d9d4a0"/>
+      <path d="M38 56 Q44 52 50 56" fill="none" stroke="#0a0a1c" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+  </button>
+
+  <svg class="cloud c1" viewBox="0 0 160 80"><use href="#cloud"/></svg>
+  <svg class="cloud c2" viewBox="0 0 160 80"><use href="#cloud"/></svg>
+  <svg class="cloud c3" viewBox="0 0 160 80"><use href="#cloud"/></svg>
+
+  <svg class="star" style="top:10%;left:12%" viewBox="0 0 20 20"><use href="#star"/></svg>
+  <svg class="star" style="top:22%;left:38%;animation-delay:.6s" viewBox="0 0 20 20"><use href="#star"/></svg>
+  <svg class="star" style="top:8%;left:62%;animation-delay:1.2s;width:12px" viewBox="0 0 20 20"><use href="#star"/></svg>
+  <svg class="star" style="top:34%;left:8%;animation-delay:1.8s;width:10px" viewBox="0 0 20 20"><use href="#star"/></svg>
+  <svg class="star" style="top:40%;left:52%;animation-delay:.3s;width:12px" viewBox="0 0 20 20"><use href="#star"/></svg>
+  <svg class="star" style="top:18%;left:84%;animation-delay:2.1s" viewBox="0 0 20 20"><use href="#star"/></svg>
+
+  <!-- floating doodles -->
+  <svg class="doodle" style="top:18%;left:46%;width:44px" viewBox="0 0 50 50" aria-hidden="true">
+    <path d="M25 44 C6 30 4 16 14 10 C20 7 25 12 25 16 C25 12 30 7 36 10 C46 16 44 30 25 44 Z" fill="#ff6b6b" stroke="#1d1b2f" stroke-width="3.5" stroke-linejoin="round"/>
+  </svg>
+  <svg class="doodle" style="bottom:30%;left:4%;width:56px;animation-delay:-2s" viewBox="0 0 60 60" aria-hidden="true">
+    <path d="M30 4 L37 22 L56 24 L42 37 L46 56 L30 46 L14 56 L18 37 L4 24 L23 22 Z" fill="#ffd23f" stroke="#1d1b2f" stroke-width="3.5" stroke-linejoin="round"/>
+  </svg>
+  <svg class="doodle" style="top:58%;left:44%;width:70px;animation-delay:-4s" viewBox="0 0 80 30" aria-hidden="true">
+    <path d="M4 18 Q14 2 24 16 T44 16 T64 16 T78 12" fill="none" stroke="#2ec4b6" stroke-width="5" stroke-linecap="round"/>
+  </svg>
+
+  <div class="wrap hero-inner">
+    <div>
+      <span class="hello-tag">👋 Hello there, stranger!</span>
+      <h1>I'm <span class="name">Rajesh
+        <svg viewBox="0 0 300 26" preserveAspectRatio="none" aria-hidden="true"><path d="M4 16 Q60 4 110 14 T210 12 T296 10" fill="none" stroke="#ffd23f" stroke-width="8" stroke-linecap="round"/></svg>
+      </span></h1>
+      <p class="lead">Welcome to my little corner of the internet — part playground, part notebook, all me.</p>
+      <div class="btns">
+        <a class="btn" href="#about">Get to know me ↓</a>
+        <a class="btn alt" href="#hi">Say hi 👋</a>
+      </div>
+    </div>
+
+    <div class="avatar-spot">
+      <div class="avatar-blob"></div>
+      <div class="bubble" id="bubble" aria-live="polite">Hi! Click me 😄</div>
+      <svg class="avatar" id="avatar" viewBox="0 0 300 340" role="img" aria-label="Cartoon of Rajesh waving hello">
+        <!-- body -->
+        <path d="M66 340 Q66 236 150 230 Q234 236 234 340 Z" fill="#2ec4b6" stroke="#1d1b2f" stroke-width="5" stroke-linejoin="round"/>
+        <path d="M128 232 L150 262 L172 232" fill="#fff8ec" stroke="#1d1b2f" stroke-width="5" stroke-linejoin="round"/>
+        <!-- lazy arm -->
+        <path d="M92 262 Q70 296 84 336" fill="none" stroke="#1d1b2f" stroke-width="5" stroke-linecap="round"/>
+        <!-- neck -->
+        <rect x="134" y="200" width="32" height="34" rx="8" fill="#f3c49b" stroke="#1d1b2f" stroke-width="5"/>
+        <!-- ears -->
+        <circle cx="86" cy="158" r="14" fill="#f3c49b" stroke="#1d1b2f" stroke-width="5"/>
+        <circle cx="214" cy="158" r="14" fill="#f3c49b" stroke="#1d1b2f" stroke-width="5"/>
+        <!-- head -->
+        <ellipse cx="150" cy="150" rx="64" ry="68" fill="#f3c49b" stroke="#1d1b2f" stroke-width="5"/>
+        <!-- hair -->
+        <path d="M84 150 Q78 78 150 74 Q222 78 216 150 Q212 118 190 108 Q176 124 150 112 Q128 126 108 110 Q90 122 84 150 Z" fill="#2b2238" stroke="#1d1b2f" stroke-width="5" stroke-linejoin="round"/>
+        <path d="M130 76 Q140 56 158 66" fill="none" stroke="#2b2238" stroke-width="7" stroke-linecap="round"/>
+        <!-- brows -->
+        <path d="M112 134 Q124 126 136 132" fill="none" stroke="#1d1b2f" stroke-width="5" stroke-linecap="round"/>
+        <path d="M164 132 Q176 126 188 134" fill="none" stroke="#1d1b2f" stroke-width="5" stroke-linecap="round"/>
+        <!-- eyes -->
+        <g class="eye"><ellipse cx="124" cy="154" rx="8" ry="10" fill="#1d1b2f"/><circle cx="127" cy="150" r="3" fill="#fff"/></g>
+        <g class="eye"><ellipse cx="176" cy="154" rx="8" ry="10" fill="#1d1b2f"/><circle cx="179" cy="150" r="3" fill="#fff"/></g>
+        <!-- cheeks -->
+        <circle cx="108" cy="178" r="10" fill="#ff9ec7" opacity=".6"/>
+        <circle cx="192" cy="178" r="10" fill="#ff9ec7" opacity=".6"/>
+        <!-- smile -->
+        <path d="M124 180 Q150 210 176 180 Z" fill="#7a2e3b" stroke="#1d1b2f" stroke-width="5" stroke-linejoin="round"/>
+        <path d="M136 194 Q150 202 164 194" fill="#ff8a8a"/>
+        <!-- waving arm -->
+        <g id="wave-arm">
+          <path d="M212 262 Q252 238 258 186" fill="none" stroke="#1d1b2f" stroke-width="30" stroke-linecap="round"/>
+          <path d="M212 262 Q252 238 258 186" fill="none" stroke="#2ec4b6" stroke-width="20" stroke-linecap="round"/>
+          <circle cx="259" cy="170" r="18" fill="#f3c49b" stroke="#1d1b2f" stroke-width="5"/>
+          <path d="M248 158 L246 146 M258 154 L258 140 M268 158 L271 146" stroke="#1d1b2f" stroke-width="4" stroke-linecap="round"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <svg class="hills" viewBox="0 0 1440 170" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 90 Q240 10 480 80 T960 70 T1440 60 V170 H0 Z" fill="var(--hill-1)" stroke="#1d1b2f" stroke-width="4"/>
+    <path d="M0 130 Q300 70 640 120 T1440 110 V170 H0 Z" fill="var(--hill-2)" stroke="#1d1b2f" stroke-width="4"/>
+  </svg>
+</header>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>curious</span><span class="dot">✦</span><span>creative</span><span class="dot">✦</span><span>always learning</span><span class="dot">✦</span><span>building cool stuff</span><span class="dot">✦</span><span>say hi!</span><span class="dot">✦</span>
+    <span>curious</span><span class="dot">✦</span><span>creative</span><span class="dot">✦</span><span>always learning</span><span class="dot">✦</span><span>building cool stuff</span><span class="dot">✦</span><span>say hi!</span><span class="dot">✦</span>
+  </div>
+</div>
+
+<main>
+  <section id="about">
+    <div class="wrap">
+      <h2 class="section-title reveal">A bit about me <span class="chip">hi!</span></h2>
+      <div class="about reveal">
+        <div class="tape"></div>
+        <svg viewBox="0 0 220 220" aria-hidden="true">
+          <circle cx="110" cy="110" r="100" fill="#ffd23f" stroke="#1d1b2f" stroke-width="5"/>
+          <!-- little laptop buddy -->
+          <rect x="52" y="62" width="116" height="78" rx="10" fill="#b8a1ff" stroke="#1d1b2f" stroke-width="5"/>
+          <rect x="64" y="74" width="92" height="54" rx="5" fill="#fff8ec" stroke="#1d1b2f" stroke-width="4"/>
+          <circle cx="94" cy="98" r="5" fill="#1d1b2f"/><circle cx="126" cy="98" r="5" fill="#1d1b2f"/>
+          <path d="M98 112 Q110 122 122 112" fill="none" stroke="#1d1b2f" stroke-width="4" stroke-linecap="round"/>
+          <path d="M34 140 H186 L172 162 H48 Z" fill="#ff6b6b" stroke="#1d1b2f" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M96 150 H124" stroke="#1d1b2f" stroke-width="4" stroke-linecap="round"/>
+          <text x="166" y="54" font-family="Fredoka, sans-serif" font-size="26" font-weight="700" fill="#1d1b2f">&lt;/&gt;</text>
+        </svg>
+        <div>
+          <p><strong>Hey, I'm Rajesh!</strong> I like learning new things and then building them — usually on the web, sometimes just in my head.</p>
+          <p>This site is my playground. I'll use it to share what I'm learning, the stuff I make, and anything I find interesting along the way.</p>
+          <p>Grab a snack and look around. 🍪</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="things">
+    <div class="wrap">
+      <h2 class="section-title reveal">Things I'm into</h2>
+      <div class="cards">
+        <div class="card reveal">
+          <div class="icon" style="background:#2ec4b6">
+            <svg viewBox="0 0 100 100" aria-hidden="true">
+              <rect x="18" y="20" width="64" height="44" rx="6" fill="#fff8ec" stroke="#1d1b2f" stroke-width="5"/>
+              <path d="M38 34 L30 42 L38 50 M62 34 L70 42 L62 50 M54 32 L46 52" fill="none" stroke="#1d1b2f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M8 68 H92 L84 80 H16 Z" fill="#ffd23f" stroke="#1d1b2f" stroke-width="5" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>Building things</h3>
+          <p>Websites, little tools, and experiments.</p>
+        </div>
+        <div class="card reveal">
+          <div class="icon" style="background:#ffd23f">
+            <svg viewBox="0 0 100 100" aria-hidden="true">
+              <path d="M50 14 C30 14 22 30 24 42 C26 54 36 58 38 68 H62 C64 58 74 54 76 42 C78 30 70 14 50 14 Z" fill="#fff8ec" stroke="#1d1b2f" stroke-width="5" stroke-linejoin="round"/>
+              <rect x="38" y="68" width="24" height="16" rx="4" fill="#b8a1ff" stroke="#1d1b2f" stroke-width="5"/>
+              <path d="M44 50 L50 40 L56 50" fill="none" stroke="#ff6b6b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>Learning</h3>
+          <p>Picking up new skills, one "aha!" at a time.</p>
+        </div>
+        <div class="card reveal">
+          <div class="icon" style="background:#ff9ec7">
+            <svg viewBox="0 0 100 100" aria-hidden="true">
+              <path d="M50 8 C66 22 70 44 64 66 H36 C30 44 34 22 50 8 Z" fill="#fff8ec" stroke="#1d1b2f" stroke-width="5" stroke-linejoin="round"/>
+              <circle cx="50" cy="38" r="8" fill="#2ec4b6" stroke="#1d1b2f" stroke-width="4"/>
+              <path d="M36 54 L24 70 L36 68 Z M64 54 L76 70 L64 68 Z" fill="#ff6b6b" stroke="#1d1b2f" stroke-width="4" stroke-linejoin="round"/>
+              <path d="M42 70 Q50 92 58 70 Z" fill="#ffd23f" stroke="#1d1b2f" stroke-width="4" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>Exploring ideas</h3>
+          <p>Chasing whatever sparks my curiosity.</p>
+        </div>
+        <div class="card reveal">
+          <div class="icon" style="background:#b8a1ff">
+            <svg viewBox="0 0 100 100" aria-hidden="true">
+              <rect x="20" y="14" width="50" height="70" rx="5" fill="#fff8ec" stroke="#1d1b2f" stroke-width="5"/>
+              <path d="M30 32 H60 M30 46 H60 M30 60 H48" stroke="#1d1b2f" stroke-width="4" stroke-linecap="round"/>
+              <g transform="rotate(35 70 56)">
+                <rect x="62" y="22" width="16" height="52" rx="3" fill="#ffd23f" stroke="#1d1b2f" stroke-width="4"/>
+                <path d="M62 74 L70 88 L78 74 Z" fill="#f3c49b" stroke="#1d1b2f" stroke-width="4" stroke-linejoin="round"/>
+              </g>
+            </svg>
+          </div>
+          <h3>Writing it down</h3>
+          <p>Notes and posts about what I discover.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="now">
+    <div class="wrap">
+      <h2 class="section-title reveal">What I'm up to <span class="chip" style="background:#ffd23f">now</span></h2>
+      <div class="now">
+        <div class="notebook reveal">
+          <ul>
+            <li><span class="check done">✓</span> Launched this website!</li>
+            <li><span class="check done">✓</span> Gave it a brand new look</li>
+            <li><span class="check soon">…</span> Writing my first post</li>
+            <li><span class="check"></span> Building something new</li>
+            <li><span class="check"></span> Your idea here? Say hi ↓</li>
+          </ul>
+        </div>
+        <svg class="note-art reveal" viewBox="0 0 320 260" aria-hidden="true">
+          <!-- a cat who supervises -->
+          <ellipse cx="160" cy="238" rx="120" ry="14" fill="#1d1b2f" opacity=".15"/>
+          <path d="M90 236 Q80 150 160 146 Q240 150 230 236 Z" fill="#ff9f43" stroke="#1d1b2f" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M226 220 Q290 214 280 160 Q276 140 262 148" fill="none" stroke="#1d1b2f" stroke-width="16" stroke-linecap="round"/>
+          <path d="M226 220 Q290 214 280 160 Q276 140 262 148" fill="none" stroke="#ff9f43" stroke-width="8" stroke-linecap="round"/>
+          <path d="M104 100 L96 40 L138 74 Z M216 100 L224 40 L182 74 Z" fill="#ff9f43" stroke="#1d1b2f" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M106 86 L102 56 L124 74 Z M214 86 L218 56 L196 74 Z" fill="#ff9ec7"/>
+          <ellipse cx="160" cy="112" rx="68" ry="56" fill="#ff9f43" stroke="#1d1b2f" stroke-width="5"/>
+          <path d="M126 112 Q136 102 146 112 M174 112 Q184 102 194 112" fill="none" stroke="#1d1b2f" stroke-width="5" stroke-linecap="round"/>
+          <path d="M154 124 L166 124 L160 131 Z" fill="#ff6b6b" stroke="#1d1b2f" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M148 138 Q154 144 160 138 Q166 144 172 138" fill="none" stroke="#1d1b2f" stroke-width="4" stroke-linecap="round"/>
+          <path d="M112 128 L84 124 M112 136 L86 140 M208 128 L236 124 M208 136 L234 140" stroke="#1d1b2f" stroke-width="3" stroke-linecap="round"/>
+          <path d="M120 200 Q130 186 140 200 M180 200 Q190 186 200 200" fill="none" stroke="#1d1b2f" stroke-width="4" stroke-linecap="round"/>
+          <text x="20" y="40" font-family="Fredoka, sans-serif" font-size="24" font-weight="700" fill="currentColor">z</text>
+          <text x="40" y="22" font-family="Fredoka, sans-serif" font-size="18" font-weight="700" fill="currentColor">z</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="hi">
+  <svg class="ground" viewBox="0 0 1440 600" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 80 Q360 0 720 70 T1440 50 V600 H0 Z" fill="#ffd23f" stroke="#1d1b2f" stroke-width="5"/>
+  </svg>
+  <div class="wrap">
+    <h2>Let's say hi! 👋</h2>
+    <p>Find me and what I'm building on GitHub.</p>
+    <a class="btn alt" style="background:#fff;color:#1d1b2f" href="https://github.com/rajesh4851" target="_blank" rel="noopener">github.com/rajesh4851 →</a>
+    <p class="small">Made with ♥ (and a lot of doodles) by Rajesh · <span id="year">2026</span></p>
+  </div>
+</footer>
+
+<script>
+  // day / night
+  const body = document.body;
+  const toggleBtn = document.getElementById('toggle');
+  function setNight(on) {
+    body.classList.toggle('night', on);
+    toggleBtn.textContent = on ? '☀️' : '🌙';
+    try { localStorage.setItem('night', on ? '1' : '0'); } catch (e) {}
+  }
+  let saved = null;
+  try { saved = localStorage.getItem('night'); } catch (e) {}
+  setNight(saved === '1');
+  toggleBtn.addEventListener('click', () => setNight(!body.classList.contains('night')));
+  document.getElementById('sky').addEventListener('click', () => setNight(!body.classList.contains('night')));
+
+  // avatar says things
+  const lines = [
+    'Hi! Click me 😄',
+    'Welcome to my site!',
+    'Try clicking the sun ☀️',
+    'Scroll down, there\'s a cat 🐱',
+    'Okay, I\'m blushing now…',
+    'You\'re fun. Stay a while!'
+  ];
+  let i = 0;
+  const avatar = document.getElementById('avatar');
+  const bubble = document.getElementById('bubble');
+  avatar.addEventListener('click', (e) => {
+    i = (i + 1) % lines.length;
+    bubble.textContent = lines[i];
+    avatar.classList.remove('jump'); void avatar.offsetWidth; avatar.classList.add('jump');
+    burst(e.clientX, e.clientY);
+  });
+
+  function burst(x, y) {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const bits = ['❤️', '✨', '⭐', '💛', '🎉'];
+    for (let k = 0; k < 8; k++) {
+      const s = document.createElement('span');
+      s.className = 'pop';
+      s.textContent = bits[k % bits.length];
+      const a = (Math.PI * 2 * k) / 8;
+      s.style.left = x + 'px'; s.style.top = y + 'px';
+      s.style.setProperty('--dx', Math.cos(a) * 90 + 'px');
+      s.style.setProperty('--dy', Math.sin(a) * 90 + 'px');
+      s.style.setProperty('--r', (Math.random() * 120 - 60) + 'deg');
+      document.body.appendChild(s);
+      setTimeout(() => s.remove(), 900);
+    }
+  }
+
+  // reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, { threshold: .15 });
+  document.querySelectorAll('.reveal').forEach((el, n) => { el.style.transitionDelay = (n % 4) * 80 + 'ms'; io.observe(el); });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
